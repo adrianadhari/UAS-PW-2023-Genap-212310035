@@ -11,15 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('events', function (Blueprint $table) {
+        Schema::create('purchases', function (Blueprint $table) {
             $table->id();
-            $table->string('event_name');
-            $table->text('event_description');
-            $table->string('event_image');
-            $table->dateTime('event_date');
-            $table->enum('event_status', ['Proses', 'Disetujui', 'Ditolak'])->default('Proses');
+            $table->integer('quantity');
+            $table->decimal('total_price', 10, 2);
+            $table->enum('status', ['Proses', 'Sukses', 'Gagal'])->default('Proses');
+            $table->string('payment_method')->nullable();
+            $table->dateTime('payment_date')->nullable();
             $table->timestamps();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('ticket_id')->constrained()->onDelete('cascade');
         });
     }
 
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('events');
+        Schema::dropIfExists('purchases');
     }
 };

@@ -3,7 +3,7 @@
 
 <div class="row m-3 justify-content-center text-center">
     <div class="col-md">
-        <p class="fw-semibold main-palette" style="font-size: 40px">Kuliner</p>
+        <p class="fw-semibold main-palette fs-1">Kuliner</p>
     </div>
 </div>
 

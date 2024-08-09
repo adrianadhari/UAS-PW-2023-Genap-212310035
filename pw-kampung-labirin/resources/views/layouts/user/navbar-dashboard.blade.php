@@ -17,7 +17,7 @@
                     <i class="fas fa-user me-2"></i>{{auth()->user()->nama_lengkap}}
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="/profil">Profile</a></li>
+                    <li><a class="dropdown-item" href="/profile">Profile</a></li>
                     <li><a class="dropdown-item" href="/">Beranda</a></li>
                     <form action="/logout" method="POST">
                         @csrf

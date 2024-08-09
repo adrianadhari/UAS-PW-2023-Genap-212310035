@@ -1,5 +1,5 @@
-<nav class="navbar navbar-expand-lg px-5 shadow-sm sticky-top" style="background-color: #ffffff">
-    <div class="container-fluid">
+<nav class="navbar navbar-expand-lg shadow-sm sticky-top" style="background-color: #ffffff">
+    <div class="container-fluid px-5">
         <a class="navbar-brand mb-2" href="/">
             <img src="/assets/img/logo.svg" alt="Logo">
         </a>
@@ -34,12 +34,12 @@
                                 class="me-1">{{ auth()->user()->nama_lengkap }}
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="/profil">Edit Profil</a></li>
+                            <li><a class="dropdown-item" href="/profile">Edit Profil</a></li>
                             @if (!auth()->user()->is_admin)
-                                <li><a class="dropdown-item" href="/dashboard">Dashboard</a></li>
+                                <li><a class="dropdown-item" href="/dashboard-user">Dashboard</a></li>
                             @endif
                             @if (auth()->user()->is_admin)
-                                <li><a class="dropdown-item" href="/admin">Dashboard</a></li>
+                                <li><a class="dropdown-item" href="/dashboard-admin">Dashboard</a></li>
                             @endif
                             <li>
                                 <hr class="dropdown-divider">
@@ -53,10 +53,10 @@
                     </li>
                 @else
                     <li class="nav-item">
-                        <a href="/masuk" class="btn btn-outline-success mx-2 px-3">Masuk</a>
+                        <a href="{{ route('login') }}" class="btn btn-outline-success mx-2 px-3">Masuk</a>
                     </li>
                     <li class="nav-item">
-                        <a href="/daftar" class="btn btn-success mx-3 px-3">Daftar</a>
+                        <a href="{{ route('register') }}" class="btn btn-success mx-3 px-3">Daftar</a>
                     </li>
                 @endauth
             </ul>

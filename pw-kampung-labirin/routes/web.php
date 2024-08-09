@@ -1,15 +1,17 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminEventController;
+use App\Http\Controllers\AdminMessageController;
+use App\Http\Controllers\AdminUserController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EventController;
-use App\Http\Controllers\MasukController;
-use App\Http\Controllers\DaftarController;
 use App\Http\Controllers\KontakController;
-use App\Http\Controllers\ProfilController;
-use App\Http\Controllers\MessageController;
-use App\Http\Controllers\KelolaUserController;
-use App\Http\Controllers\KelolaEventController;
-use App\Http\Controllers\DashboardUserController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserEventController;
+use App\Http\Controllers\UserTicketController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,51 +29,49 @@ Route::get('/', function () {
         "title" => "Beranda"
     ]);
 });
-
 Route::get('/kuliner', function () {
     return view('user.kuliner', [
         "title" => "Kuliner"
     ]);
 });
-
 Route::get('/atraksi', function () {
     return view('user.atraksi', [
         "title" => "Atraksi"
     ]);
 });
-
-Route::get('/dashboard', [DashboardUserController::class, 'index'])->middleware('auth');
-Route::get('/dashboard/reservasi-event', [DashboardUserController::class, 'reservasiEvent'])->middleware('auth');
-Route::post('/dashboard/reservasi-event', [DashboardUserController::class, 'store'])->middleware('auth');
-Route::get('/dashboard/kelola-event', [DashboardUserController::class, 'kelolaEvent'])->middleware('auth');
-
-Route::get('/profil', [ProfilController::class, 'index'])->middleware('auth');
-Route::post('/profil', [ProfilController::class, 'update'])->middleware('auth');
-
 Route::get('/event', [EventController::class, 'index']);
 Route::get('/event/{id}', [EventController::class, 'show']);
-
 Route::get('/kontak', [KontakController::class, 'index']);
 Route::post('/kontak', [KontakController::class, 'store']);
 
-Route::get('/masuk', [MasukController::class, 'index'])->name('login')->middleware('guest');
-Route::post('/masuk', [MasukController::class, 'authenticate'])->middleware('guest');
-Route::post('/logout', [MasukController::class, 'logout'])->middleware('auth');
 
-Route::get('/daftar', [DaftarController::class, 'index'])->middleware('guest');
-Route::post('/daftar', [DaftarController::class, 'store'])->middleware('guest');
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
+    Route::post('/register', [AuthController::class, 'register']);
+});
 
-Route::get('/admin', function () {
-    return view('admin.dashboard', [
-        'title' => 'Dashboard'
-    ]);
-})->middleware('admin');
 
-Route::get('/admin/kelola-event', [KelolaEventController::class, 'index'])->middleware('admin');
+Route::middleware(['auth', 'admin'])->prefix('dashboard-admin')->as('admin.')->group(function () {
+    Route::get('/', [AdminController::class, 'index'])->name('dashboard');
+    Route::resource('/events', AdminEventController::class);
+    Route::resource('/messages', AdminMessageController::class);
+    Route::resource('/users', AdminUserController::class);
+});
 
-Route::get('/admin/kelola-user', [KelolaUserController::class, 'index'])->middleware('admin');
-Route::get('/admin/kelola-user/{id}', [KelolaUserController::class, 'show'])->middleware('admin');
-Route::post('/admin/kelola-user/{id}', [KelolaUserController::class, 'store'])->middleware('admin');
-// Route::post('/admin/kelola-user/{id}', [KelolaUserController::class, 'destroy'])->middleware('admin');
 
-Route::get('/admin/pesan', [MessageController::class, 'index'])->middleware('admin');
+Route::middleware(['auth', 'user'])->prefix('dashboard-user')->as('user.')->group(function () {
+    Route::get('/', [UserController::class, 'index'])->name('dashboard');
+    Route::resource('/events', UserEventController::class);
+    Route::resource('/tickets', UserTicketController::class);
+});
+
+
+Route::middleware('auth')->group(function() {
+    Route::get('/profile', [ProfileController::class, 'index']);
+    Route::post('/updateDataProfile', [ProfileController::class, 'updateDataProfile']);
+    Route::post('/updateDataPassword', [ProfileController::class, 'updateDataPassword']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+});
+

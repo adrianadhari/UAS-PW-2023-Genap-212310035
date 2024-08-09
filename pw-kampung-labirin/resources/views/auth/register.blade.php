@@ -51,7 +51,7 @@
     <div class="d-flex align-items-center h-100">
         <div class="login-box p-5">
             <h1 class="text-center mb-3" style="color: #A4BE7B">INKARIN</h1>
-            <form action="/daftar" method="post">
+            <form action="{{ route('register') }}" method="post">
                 @csrf
                 <div class="mb-2">
                     <label for="nama_lengkap" class="form-label">Nama Lengkap</label>
@@ -113,7 +113,7 @@
                 </div>
                 <button type="submit">Daftar</button>
             </form>
-            <span class="text-center d-block fw-medium mt-3">Sudah memiliki akun?<a href="/masuk"
+            <span class="text-center d-block fw-medium mt-3">Sudah memiliki akun?<a href="{{ route('login') }}"
                     style="color: #A4BE7B" class="text-decoration-none">
                     Masuk</a></span>
         </div>

@@ -67,7 +67,7 @@
                 </div>
             @endif
             <h1 class="text-center mb-5" style="color: #A4BE7B">INKARIN</h1>
-            <form action="/masuk" method="POST">
+            <form action="{{ route('login') }}" method="POST">
                 @csrf
                 <div class="mb-3">
                     <label for="username" class="form-label">Username</label>
@@ -94,7 +94,7 @@
                 </div>
                 <button type="submit">Masuk</button>
             </form>
-            <span class="text-center d-block fw-medium">Belum memiliki akun?<a href="/daftar" style="color: #A4BE7B"
+            <span class="text-center d-block fw-medium">Belum memiliki akun?<a href="{{ route('register') }}" style="color: #A4BE7B"
                     class="text-decoration-none">
                     Daftar</a></span>
         </div>

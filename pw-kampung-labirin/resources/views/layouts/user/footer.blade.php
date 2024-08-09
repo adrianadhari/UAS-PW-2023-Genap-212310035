@@ -1,7 +1,7 @@
 <!-- Footer Start -->
-<footer class="my-5">
-    <div class="container-fluid">
-        <div class="row pt-3 px-5">
+<footer class="shadow-lg">
+    <div class="container-fluid p-5">
+        <div class="row pt-3">
             <div class="col-md-4 mb-2">
                 <img src="/assets/img/logo.svg" alt="Logo" class="mb-3">
                 <p class="text-secondary">INKARIN adalah project website yang dibuat untuk memenuhi tugas akhir mata
